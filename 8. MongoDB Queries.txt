@@ -1,0 +1,233 @@
+Group B: NoSQL Databases
+1.    MongoDB Queries:
+DesignandDevelopMongoDBQueriesusingCRUDoperations.(UseCRUDoperations,
+SAVE method, logical operators etc.)
+
+
+[comp@localhost ~]$ su
+
+[root@localhost comp]# systemctl start mongod
+
+[root@localhost comp]# mongo
+
+> db
+
+>  show dbs
+
+> use mydb
+
+> show dbs
+
+1) To drop Database:-
+
+> db.dropDatabase()
+
+2) To create Collection:-
+
+> db.createCollection("Student");
+
+> db
+
+> use Student
+
+> db.Student.insert({rollno:1,name:"pooja",city:"loni"});
+
+> db.Student.find()
+
+> db.Student.insert({rollno:2,firstname:"Pallavi",middlename:"Sunil", lastname:"Lagad", rollno:3, firstname:"Divya",middlename:"Pralhad", lastname:"Dokhe"})
+
+> db.Student.find()
+
+> db.Student.insert({rollno:"4", name:"Prajakta Dighe",
+course:{ 
+coursename:"Computer Engineering",
+class:"T.E."},
+address:{
+city:"Loni",
+state:"Maharashtra"}})
+
+3) To find data in document:-
+
+> db.Student.find()
+
+4) To find specific data in a document:-
+
+> db.Student.find({"rollno":2})
+
+5) To update specific data in the document:-
+
+> db.Student.update({"rollno":1}, {"$set":{"name":"Puja"}})
+
+6) To drop Collection:-
+
+> db.Student.drop()
+
+6) To delete Collection:-
+> db.dropDatabase(student)
+
+db.stud.insert({rollno:2,name:'pallavi',city:'rahuri'});
+db.stud.insert({rollno:3,name:'hema',city:'ashwavi'});
+db.stud.insert({rollno:4,name:'pallavi',city:'rahata'});
+db.stud.insert({rollno:5,name:'dhano',city:'pune'});
+db.stud.insert({rollno:6,name:'sai',city:'mumbai'});
+db.stud.insert({rollno:7,name:'om',city:'nagar'});
+db.stud.insert({rollno:8,name:'pooja123',city:'goa'});
+db.stud.insert({rollno:9,name:'jay',city:'USA'});
+db.stud.insert({rollno:10,name:'jaydev',city:'rahuri'});
+
+db.stud.find().pretty()
+
+> use pravara
+switched to db pravara
+
+> db.createCollection("stud")
+{ "ok" : 1 }
+
+> db.stud.insert({rollno:1,name:"pooja",city:"loni"});
+WriteResult({ "nInserted" : 1 })
+
+> db.stud.find();
+{ "_id" : ObjectId("61a1ac65eb4f6cb4db6d94c2"), "rollno" : 1, "name" : "pooja",
+"city" : "loni" }
+
+> db.stud.find().pretty()
+{
+        "_id" : ObjectId("61a1ac65eb4f6cb4db6d94c2"),
+        "rollno" : 1,
+        "name" : "pooja",
+        "city" : "loni"
+}
+
+> db.stud.insert({rollno:2,name:'pallavi',city:'rahuri'});
+WriteResult({ "nInserted" : 1 })
+
+> db.stud.insert({rollno:3,name:'hema',city:'ashwavi'});
+WriteResult({ "nInserted" : 1 })
+
+> db.stud.insert({rollno:4,name:'pallavi',city:'rahata'});
+WriteResult({ "nInserted" : 1 })
+
+> db.stud.insert({rollno:5,name:'dhano',city:'pune'});
+WriteResult({ "nInserted" : 1 })
+> db.stud.insert({rollno:6,name:'sai',city:'mumbai'});
+WriteResult({ "nInserted" : 1 })
+
+> db.stud.insert({rollno:7,name:'om',city:'nagar'});
+WriteResult({ "nInserted" : 1 })
+
+> db.stud.insert({rollno:8,name:'pooja123',city:'goa'});
+WriteResult({ "nInserted" : 1 })
+
+> db.stud.find().pretty()
+{
+        "_id" : ObjectId("61a1ac65eb4f6cb4db6d94c2"),
+        "rollno" : 1,
+        "name" : "pooja",
+        "city" : "loni"
+}
+{
+        "_id" : ObjectId("61a1ad7deb4f6cb4db6d94c3"),
+        "rollno" : 2,
+        "name" : "pallavi",
+        "city" : "rahuri"
+}
+{
+        "_id" : ObjectId("61a1ad94eb4f6cb4db6d94c4"),
+        "rollno" : 3,
+        "name" : "hema",
+        "city" : "ashwavi"
+}
+{
+        "_id" : ObjectId("61a1ada2eb4f6cb4db6d94c5"),
+        "rollno" : 4,
+        "name" : "pallavi",
+        "city" : "rahata"
+}
+{
+        "_id" : ObjectId("61a1adabeb4f6cb4db6d94c6"),
+        "rollno" : 5,
+        "name" : "dhano",
+        "city" : "pune"
+}
+{
+        "_id" : ObjectId("61a1adb5eb4f6cb4db6d94c7"),
+        "rollno" : 6,
+        "name" : "sai",
+        "city" : "mumbai"
+}
+{
+        "_id" : ObjectId("61a1adbdeb4f6cb4db6d94c8"),
+        "rollno" : 7,
+        "name" : "om",
+        "city" : "nagar"
+}
+{
+        "_id" : ObjectId("61a1adc8eb4f6cb4db6d94c9"),
+        "rollno" : 8,
+        "name" : "pooja123",
+        "city" : "goa"
+}
+
+> db.stud.find().sort({rollno:-1}).pretty();
+{
+        "_id" : ObjectId("61a1adc8eb4f6cb4db6d94c9"),
+        "rollno" : 8,
+        "name" : "pooja123",
+        "city" : "goa"
+}
+{
+        "_id" : ObjectId("61a1adbdeb4f6cb4db6d94c8"),
+        "rollno" : 7,
+        "name" : "om",
+        "city" : "nagar"
+}
+{
+        "_id" : ObjectId("61a1adb5eb4f6cb4db6d94c7"),
+        "rollno" : 6,
+        "name" : "sai",
+        "city" : "mumbai"
+}
+{
+        "_id" : ObjectId("61a1adabeb4f6cb4db6d94c6"),
+        "rollno" : 5,
+        "name" : "dhano",
+        "city" : "pune"
+}
+{
+        "_id" : ObjectId("61a1ada2eb4f6cb4db6d94c5"),
+        "rollno" : 4,
+        "name" : "pallavi",
+        "city" : "rahata"
+}
+{
+        "_id" : ObjectId("61a1ad94eb4f6cb4db6d94c4"),
+        "rollno" : 3,
+        "name" : "hema",
+        "city" : "ashwavi"
+}
+{
+        "_id" : ObjectId("61a1ad7deb4f6cb4db6d94c3"),
+        "rollno" : 2,
+        "name" : "pallavi",
+        "city" : "rahuri"
+}
+{
+        "_id" : ObjectId("61a1ac65eb4f6cb4db6d94c2"),
+        "rollno" : 1,
+        "name" : "pooja",
+        "city" : "loni"
+}
+
+> db.stud.stats();
+{
+        "ns" : "pravara.stud",
+        "count" : 8,
+        "size" : 562,
+        "avgObjSize" : 70,
+        "storageSize" : 36864,
+        "capped" : false,
+        "wiredTiger" : {
+                "metadata" : {
+                        "formatVersion" : 1
+                },
+

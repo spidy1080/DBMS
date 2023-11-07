@@ -1,0 +1,187 @@
+2.    MongoDB – Aggregation and Indexing:
+Design  and  Develop  MongoDB  Queries using aggregation  and  indexing  with  suitable  example using MongoDB.
+
+> db.createCollection("records");
+{ "ok" : 1 }
+> db.records.insert({rollno:1,name:"sayali",subj:"TOC",marks:78});
+WriteResult({ "nInserted" : 1 })
+> db.records.insert({rollno:2,name:"pooja",subj:"TOC",marks:65});
+WriteResult({ "nInserted" : 1 })
+> db.records.insert({rollno:3,name:"prachi",subj:"TOC",marks:80});
+WriteResult({ "nInserted" : 1 })
+> db.records.insert({rollno:4,name:"pallavi",subj:"TOC",marks:70});
+WriteResult({ "nInserted" : 1 })
+> db.records.insert({rollno:5,name:"amruta",subj:"db",marks:67});
+WriteResult({ "nInserted" : 1 })
+> db.records.insert({rollno:6,name:"priti",subj:"ISEE",marks:97});
+WriteResult({ "nInserted" : 1 })
+> db.records.insert({rollno:7,name:"diksha",subj:"oop",marks:59});
+WriteResult({ "nInserted" : 1 })
+> db.records.insert({rollno:8,name:"deepika",subj:"cn",marks:70});
+WriteResult({ "nInserted" : 1 })
+> db.records.insert({rollno:9,name:"genelia",subj:"sepm",marks:84});
+WriteResult({ "nInserted" : 1 })
+> db.records.insert({rollno:10,name:"amaraya",subj:"sepm",marks:77});
+WriteResult({ "nInserted" : 1 })
+> db.records.aggregate([{$group:{_id:"$subj",marks:{$min:"$marks"}}}]);
+{ "_id" : "sepm", "marks" : 77 }
+{ "_id" : "cn", "marks" : 70 }
+{ "_id" : "oop", "marks" : 59 }
+{ "_id" : "ISEE", "marks" : 97 }
+{ "_id" : "db", "marks" : 67 }
+{ "_id" : "TOC", "marks" : 65 }
+> db.records.aggregate([{$group:{_id:"$subj",marks:{$max:"$marks"}}}]);
+{ "_id" : "sepm", "marks" : 84 }
+{ "_id" : "cn", "marks" : 70 }
+{ "_id" : "oop", "marks" : 59 }
+{ "_id" : "ISEE", "marks" : 97 }
+{ "_id" : "db", "marks" : 67 }
+{ "_id" : "TOC", "marks" : 80 }
+> db.records.aggregate([{$group:{_id:"$subj",marks:{$sum:"$marks"}}}]);
+{ "_id" : "sepm", "marks" : 161 }
+{ "_id" : "cn", "marks" : 70 }
+{ "_id" : "oop", "marks" : 59 }
+{ "_id" : "ISEE", "marks" : 97 }
+{ "_id" : "db", "marks" : 67 }
+{ "_id" : "TOC", "marks" : 293 }
+> db.records.aggregate([{$group:{_id:"$subj",marks:{$avg:"$marks"}}}]);
+{ "_id" : "sepm", "marks" : 80.5 }
+{ "_id" : "cn", "marks" : 70 }
+{ "_id" : "oop", "marks" : 59 }
+{ "_id" : "ISEE", "marks" : 97 }
+{ "_id" : "db", "marks" : 67 }
+{ "_id" : "TOC", "marks" : 73.25 }
+> db.records.aggregate([{$group:{_id:"$subj",marks:{$last:"$marks"}}}]);
+{ "_id" : "sepm", "marks" : 77 }
+{ "_id" : "cn", "marks" : 70 }
+{ "_id" : "oop", "marks" : 59 }
+{ "_id" : "ISEE", "marks" : 97 }
+{ "_id" : "db", "marks" : 67 }
+{ "_id" : "TOC", "marks" : 70 }
+> db.records.aggregate([{$group:{_id:"$subj",marks:{$first:"$marks"}}}]);
+{ "_id" : "sepm", "marks" : 84 }
+{ "_id" : "cn", "marks" : 70 }
+{ "_id" : "oop", "marks" : 59 }
+{ "_id" : "ISEE", "marks" : 97 }
+{ "_id" : "db", "marks" : 67 }
+{ "_id" : "TOC", "marks" : 78 }
+> db.records.ensureIndex({rollno:1});
+{
+        "createdCollectionAutomatically" : false,
+        "numIndexesBefore" : 1,
+        "numIndexesAfter" : 2,
+        "ok" : 1
+}
+> db.records.getIndexes();
+[
+        {
+                "v" : 1,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_",
+                "ns" : "pravara.records"
+        },
+        {
+                "v" : 1,
+                "key" : {
+                        "rollno" : 1
+                },
+                "name" : "rollno_1",
+                "ns" : "pravara.records"
+        }
+]
+> db.records.find().min({rollno:4});
+{ "_id" : ObjectId("61a1b21aeb4f6cb4db6d94cd"), "rollno" : 4, "name" : "pall
+, "subj" : "TOC", "marks" : 70 }
+{ "_id" : ObjectId("61a1b224eb4f6cb4db6d94ce"), "rollno" : 5, "name" : "amru
+ "subj" : "db", "marks" : 67 }
+{ "_id" : ObjectId("61a1b22ceb4f6cb4db6d94cf"), "rollno" : 6, "name" : "prit
+"subj" : "ISEE", "marks" : 97 }
+{ "_id" : ObjectId("61a1b232eb4f6cb4db6d94d0"), "rollno" : 7, "name" : "diks
+ "subj" : "oop", "marks" : 59 }
+{ "_id" : ObjectId("61a1b23aeb4f6cb4db6d94d1"), "rollno" : 8, "name" : "deep
+, "subj" : "cn", "marks" : 70 }
+{ "_id" : ObjectId("61a1b242eb4f6cb4db6d94d2"), "rollno" : 9, "name" : "gene
+, "subj" : "sepm", "marks" : 84 }
+{ "_id" : ObjectId("61a1b24beb4f6cb4db6d94d3"), "rollno" : 10, "name" : "ama
+", "subj" : "sepm", "marks" : 77 }
+> db.records.find().min({rollno:4}).pretty()
+{
+        "_id" : ObjectId("61a1b21aeb4f6cb4db6d94cd"),
+        "rollno" : 4,
+        "name" : "pallavi",
+        "subj" : "TOC",
+        "marks" : 70
+}
+{
+        "_id" : ObjectId("61a1b224eb4f6cb4db6d94ce"),
+        "rollno" : 5,
+        "name" : "amruta",
+        "subj" : "db",
+        "marks" : 67
+}
+{
+        "_id" : ObjectId("61a1b22ceb4f6cb4db6d94cf"),
+        "rollno" : 6,
+        "name" : "priti",
+        "subj" : "ISEE",
+        "marks" : 97
+}
+{
+        "_id" : ObjectId("61a1b232eb4f6cb4db6d94d0"),
+        "rollno" : 7,
+        "name" : "diksha",
+        "subj" : "oop",
+        "marks" : 59
+}
+{
+        "_id" : ObjectId("61a1b23aeb4f6cb4db6d94d1"),
+        "rollno" : 8,
+        "name" : "deepika",
+        "subj" : "cn",
+        "marks" : 70
+}
+{
+        "_id" : ObjectId("61a1b242eb4f6cb4db6d94d2"),
+        "rollno" : 9,
+        "name" : "genelia",
+        "subj" : "sepm",
+        "marks" : 84
+}
+{
+        "_id" : ObjectId("61a1b24beb4f6cb4db6d94d3"),
+        "rollno" : 10,
+        "name" : "amaraya",
+        "subj" : "sepm",
+        "marks" : 77
+}
+> db.records.find().max({rollno:4});
+{ "_id" : ObjectId("61a1b200eb4f6cb4db6d94ca"), "rollno" : 1, "name" : "saya
+ "subj" : "TOC", "marks" : 78 }
+{ "_id" : ObjectId("61a1b209eb4f6cb4db6d94cb"), "rollno" : 2, "name" : "pooj
+"subj" : "TOC", "marks" : 65 }
+{ "_id" : ObjectId("61a1b212eb4f6cb4db6d94cc"), "rollno" : 3, "name" : "prac
+ "subj" : "TOC", "marks" : 80 }
+> db.records.find().max({rollno:4}).pretty()
+{
+        "_id" : ObjectId("61a1b200eb4f6cb4db6d94ca"),
+        "rollno" : 1,
+        "name" : "sayali",
+        "subj" : "TOC",
+        "marks" : 78
+}
+{
+        "_id" : ObjectId("61a1b209eb4f6cb4db6d94cb"),
+        "rollno" : 2,
+        "name" : "pooja",
+        "subj" : "TOC",
+        "marks" : 65
+}
+{
+        "_id" : ObjectId("61a1b212eb4f6cb4db6d94cc"),
+        "rollno" : 3,
+        "name" : "prachi",
+        "subj" : "TOC",
+        "marks" : 80
+}
